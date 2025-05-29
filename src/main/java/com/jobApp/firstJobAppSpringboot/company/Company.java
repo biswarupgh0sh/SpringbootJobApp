@@ -1,13 +1,14 @@
 package com.jobApp.firstJobAppSpringboot.company;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jobApp.firstJobAppSpringboot.job.Job;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import com.jobApp.firstJobAppSpringboot.review.Review;
+import jakarta.persistence.*;
 
 import java.util.List;
 
+
+@Entity
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,10 +16,20 @@ public class Company {
     private String name;
     private String description;
 
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy = "company")
     private List<Job> jobs;
 
-    //private List<Review> reviews;
+    @OneToMany(mappedBy = "company")
+    private List<Review> reviews;
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public Company() {
     }
